@@ -9,8 +9,6 @@ sidebar.color = "white"
 
 We use a set function that allows us to hook in and build events off of that assignment.
 
-<code> 
-
   var Sidebar = Backbone.Model.extend({ });
 
   // Explicitly set the sidebar object in the global 'window' scope
@@ -20,23 +18,18 @@ We use a set function that allows us to hook in and build events off of that ass
   // property to change to white.
   sidebar.set({color: 'white'});
 
-</code>
 
 This then allows us to define an event for when the color attribute is set.
-
-<code>
 
   // Define tell that object what it should do when its color property changes.
   sidebar.on('change:color', function(model, color) {
     $('#sidebar').css({background: color});
   });
-</code>
 
 
 Now lets attach some functionality to the sidebar object. Lets give it the ability to prompt the user for a color that it should change its color property to.  When this code runs, it will set the color property to white and then immediately prompt the user for a new color.
 
 
-<code>
 
   var Sidebar = Backbone.Model.extend({
     promptColor: function() {
@@ -55,5 +48,4 @@ Now lets attach some functionality to the sidebar object. Lets give it the abili
 
   sidebar.promptColor();
 
-</code>
 
