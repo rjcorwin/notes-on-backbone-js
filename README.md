@@ -1,4 +1,7 @@
 
+# Backbone.Events
+
+This example is an expansion of the Backbone.Events example at backbonejs.org.
 
 We are creating a sidebar object in javascript that has an associated #sidebar div and we want to assign properties to that sidebar object so that when properties are assigned an event is triggered which gives us the ability to act on that data change in data.  
 
