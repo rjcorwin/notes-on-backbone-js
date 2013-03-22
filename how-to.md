@@ -1,6 +1,16 @@
 
 # How to use Backbone with CouchDB without a Backbone connector
 
+## Working with Models
+```js
+var ClassroomModel = Backbone.Model.extend({"urlRoot":"/someDatabaseUrl","idAttribute":"_id"})
+var someClassroom = new ClassroomModel({_id:"someClassroomId"})
+someClassroom.fetch({success: function (model, response, options) {
+    console.log(Classroom.get('teacher'))
+}})
+```
+
+## Working with Views
 > Well I noticied views always responded with a {"total_rows":4,"offset":0,"rows":[{...}, {...}]} etc...and backbone was expecting the data as an array [{...},{...}] so I wrote a list that just responded with the array.
 [link to comment](https://github.com/pyronicide/backbone.couchdb.js/issues/7#issuecomment-15276651)
 
