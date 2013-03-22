@@ -1,6 +1,9 @@
 
 # reference 
-- http://backbonejs.org
+- the canonical reference
+-- http://backbonejs.org
+- Annotated Backbone.js source
+-- http://backbonejs.org/docs/backbone.html
 - a good alternative to the standard reference
 -- http://findcreaterun.com/backbone-js/
 
