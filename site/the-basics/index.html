@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Backbone.Model basics</title>
+  </head>
+
+  <body>
+
+    <div class="content">
+
+      <h1>Backbone.Model basics</h1>
+<p>This example is an expansion of the <a href="http://backbonejs.org/#Model">Backbone.Model example at backbonejs.org</a>.</p>
+<p>We are creating a sidebar object in javascript that has an associated #sidebar div and we want to assign properties to that sidebar object so that when properties are assigned an event is triggered which gives us the ability to act on that data change in data.  </p>
+<p>In backbone models, instead of setting a property directly like...</p>
+<pre><code class="lang-js">sidebar.color = &quot;white&quot;</code></pre>
+<p>We use a set function that allows us to hook in and build events off of that assignment.</p>
+<pre><code class="lang-js">  <span class="keyword">var</span> Sidebar = Backbone.Model.extend({ });
+
+  <span class="comment">// Explicitly set the sidebar object in the global 'window' scope</span>
+  window.sidebar = <span class="keyword">new</span> Sidebar;
+
+  <span class="comment">// This will trigger the change:color event and cause the #sidebar element's background </span>
+  <span class="comment">// property to change to white.</span>
+  sidebar.set({color: <span class="string">'white'</span>});</code></pre>
+<p>This then allows us to define an event for when set function is used to save the color attribute.  We&#39;ll use the <a href="http://backbonejs.org/#Events-catalog">&quot;change:[attribute]&quot; event</a> but we could also use the &quot;change&quot; event and run an if statement to see if the color attribute is changing.</p>
+<pre><code class="lang-js">  <span class="comment">// Define tell that object what it should do when its color property changes.</span>
+  sidebar.on(<span class="string">'change:color'</span>, <span class="keyword">function</span>(model, color) {
+    $(<span class="string">'#sidebar'</span>).css({background: color});
+  });</code></pre>
+<p>Now lets attach some functionality to the sidebar object. Lets give it the ability to prompt the user for a color that it should change its color property to.  When this code runs, it will set the color property to white and then immediately prompt the user for a new color.</p>
+<pre><code class="lang-js">  <span class="keyword">var</span> Sidebar = Backbone.Model.extend({
+    promptColor: <span class="keyword">function</span>() {
+      <span class="keyword">var</span> cssColor = prompt(<span class="string">"Please enter a CSS color:"</span>);
+      <span class="keyword">this</span>.set({color: cssColor});
+    }
+  });
+
+  window.sidebar = <span class="keyword">new</span> Sidebar;
+
+  sidebar.on(<span class="string">'change:color'</span>, <span class="keyword">function</span>(model, color) {
+    $(<span class="string">'#sidebar'</span>).css({color: color});
+  });
+
+  sidebar.set({color: <span class="string">'white'</span>});
+
+  sidebar.promptColor();</code></pre>
+<h1>Getting an instance of a model as JSON</h1>
+<p>This is listed under the model.toJSON() documentation because .toJSON() is not actually used in the example. I think they are just pointing out that when you JSON.stringify(someModelInstance) you get the JSON of the attributes as opposed to the actual model instance.</p>
+<pre><code class="lang-js"><span class="keyword">var</span> artist = <span class="keyword">new</span> Backbone.Model({
+  firstName: <span class="string">"Wassily"</span>,
+  lastName: <span class="string">"Kandinsky"</span>
+});
+
+artist.set({birthday: <span class="string">"December 16, 1866"</span>});
+
+<span class="comment">// alerts: {"firstName":"Wassily","lastName":"Kandinsky","birthday":"December 16, 1866"}</span>
+alert(JSON.stringify(artist));</code></pre>
+<h1>Interacting with a server</h1>
+<p> To understand how Backbone will pull data from the server for your model (fetch) and push data from the models on the client to the server (save), it&#39;s important to understand that Backbone assumes there is a unique URL for every single one of your model instances that it can perform REST operations on (HTTP POST=Create, HTTP GET=Read, HTTP UPDATE=Update, HTTP DELETE=Delete).  </p>
+<p>Lets say you had a RESTful endpoint at <a href="http://127.0.0.1/artists">http://127.0.0.1/artists</a> that you could use to perform CRUD operations on objects at urls like <a href="http://127.0.0.1/artists/kadinsky">http://127.0.0.1/artists/kadinsky</a> and <a href="http://127.0.0.1/artists/fleming">http://127.0.0.1/artists/fleming</a> ... When you define your artist model you would define it like so...</p>
+<pre><code class="lang-js">  <span class="comment">// Define artists</span>
+  <span class="keyword">var</span> artist = Backbone.Model.extend({
+    url: <span class="string">'http://127.0.0.1/artists'</span>
+  });
+
+  <span class="comment">// Define an artist instance</span>
+  <span class="keyword">var</span> vanHalen = <span class="keyword">new</span> artist(<span class="string">'van-halen'</span>)
+
+  <span class="comment">// This performs GET http://127.0.0.1/artists/van-halen</span>
+  artist.fetch()
+
+  <span class="keyword">var</span> eddieVeddar = <span class="keyword">new</span> artist(<span class="string">'eddie-veddar'</span>) 
+
+  <span class="comment">// This performs GET http://127.0.0.1/artists/eddie-veddar</span>
+  artist.fetch()</code></pre>
+<p>This makes the following methods possible...</p>
+<h2>model.sync()</h2>
+<p>Set the model instance to save automatically to the server using someModelInstance.sync()
+I think that&#39;s what .sync() is used for...</p>
+<h2>model.fetch()</h2>
+<p>Pull the current version of the object from the server.</p>
+<h2>model.save()</h2>
+<p>Push what is stored locally to the remote database.</p>
+<h1>Controllers in Backbone.js are labeled as &quot;Views&quot;</h1>
+<blockquote>
+<p>Spine controllers and Backbone views serve the same purpose and bridge the gap between the HTML markup and the model layer. In a conventional server-side MVC framework this layer is most often referred to as controllers and in my mind that name makes more sense than calling it views because the markup represents the view.
+<a href="http://hjortureh.tumblr.com/post/22117245794/spine-js-vs-backbone-js">http://hjortureh.tumblr.com/post/22117245794/spine-js-vs-backbone-js</a></p>
+</blockquote>
+<pre><code class="lang-js"><span class="keyword">var</span> ContactView = Backbone.View.extend({
+
+  events: { 
+    <span class="string">"click li"</span>: <span class="string">"openContact"</span> 
+  },
+
+  initialize: <span class="keyword">function</span>() {
+    contacts.bind( <span class="string">"reset"</span>, reset, <span class="keyword">this</span> );
+    contacts.fetch();
+  },
+
+  reset: <span class="keyword">function</span>() {  
+      <span class="keyword">this</span>.contactList = <span class="keyword">this</span>.$(<span class="string">"#contact-list"</span>);
+
+      <span class="comment">// Do stuff</span>
+    }
+
+});
+
+<span class="comment">// Usage</span>
+<span class="keyword">new</span> ContactView({ el: $(<span class="string">"#view"</span>).get(<span class="number">0</span>) });</code></pre>
+
+
+      
+        <div class="nav">
+          
+          
+            <a class="prev" href="/README/"><span class="arrow">&larr;</span> Prev</a>
+          
+          
+        </div>
+      
+
+    </div>
+
+  </body>
+</html>
