@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>How to use Backbone with CouchDB without a Backbone connector</title>
+  </head>
+
+  <body>
+
+    <div class="content">
+
+      <h1>How to use Backbone with CouchDB without a Backbone connector</h1>
+<h2>Working with Models</h2>
+<h3>Fetch a document</h3>
+<pre><code class="lang-js"><span class="keyword">var</span> ClassroomModel = Backbone.Model.extend({<span class="string">"urlRoot"</span>:<span class="string">"/someDatabaseUrl"</span>,<span class="string">"idAttribute"</span>:<span class="string">"_id"</span>})
+<span class="keyword">var</span> someClassroom = <span class="keyword">new</span> ClassroomModel({_id:<span class="string">"someClassroomId"</span>})
+someClassroom.fetch({success: <span class="keyword">function</span> (model, response, options) {
+    console.log(Classroom.get(<span class="string">'teacher'</span>))
+}})</code></pre>
+<h3>Save a document</h3>
+<pre><code class="lang-js"><span class="keyword">var</span> ClassroomModel = Backbone.couch.Model.extend({_db:Backbone.couch.db(<span class="string">'someDatabaseId'</span>)})
+<span class="keyword">var</span> someClass = <span class="keyword">new</span> ClassroomModel({_id:<span class="string">"someClassroomId"</span>})
+someClass.fetch({success: <span class="keyword">function</span> (model, response, options) {
+  someClass.set(<span class="string">"teacher"</span>, <span class="string">"Opra"</span>)
+  someClass.save()
+}})</code></pre>
+<h2>Working with Views</h2>
+<blockquote>
+<p>Well I noticied views always responded with a {&quot;total_rows&quot;:4,&quot;offset&quot;:0,&quot;rows&quot;:[{...}, {...}]} etc...and backbone was expecting the data as an array [{...},{...}] so I wrote a list that just responded with the array.
+<a href="https://github.com/pyronicide/backbone.couchdb.js/issues/7#issuecomment-15276651">link to comment</a></p>
+</blockquote>
+<pre><code class="lang-js">ddoc.lists= {
+    asArray:<span class="keyword">function</span>(head,req){
+        <span class="comment">//The provides function is a handy helper that determines what is returned </span>
+        <span class="comment">//based on the content type.</span>
+        provides(<span class="string">'json'</span>, <span class="keyword">function</span>(){
+           <span class="keyword">var</span> r = [];
+           <span class="keyword">var</span> row;
+           <span class="keyword">while</span>(row = getRow()){
+               r.push(row.value);
+               <span class="comment">//You have a key and a value object in a row, essentially one of the rows returned from </span>
+               <span class="comment">//the view. This essentially gives you the opportunity to morph what you want returned.</span>
+           }
+           <span class="keyword">return</span> JSON.stringify(r);
+           <span class="comment">//A variation would be to call the send(...) function in the while loop</span>
+           <span class="comment">//This would allow you to send back chuncks of data. Not sure if this is </span>
+           <span class="comment">//ideal for backbone because it may rely on the whole list getting there </span>
+           <span class="comment">//first so it may not make a difference.</span>
+        });
+    }
+};</code></pre>
+<h1>How to use node.js as the middleman between couch and backbone</h1>
+<ul>
+<li><a href="http://www.codeproject.com/Articles/507936/NodeplusApplicationplusServerpluswithplusCouchDB">http://www.codeproject.com/Articles/507936/NodeplusApplicationplusServerpluswithplusCouchDB</a>
+-- same? -&gt; <a href="http://brettjonesdev.com/node-application-server-with-couchdb/">http://brettjonesdev.com/node-application-server-with-couchdb/</a> </li>
+<li>piping! <a href="http://japhr.blogspot.com/2011/08/deleting-things-in-backbonejs.html">http://japhr.blogspot.com/2011/08/deleting-things-in-backbonejs.html</a></li>
+</ul>
+<p>A simple example...</p>
+<p>from <a href="http://stackoverflow.com/questions/12850216/connecting-backbone-js-with-couchdb-when-hosting-in-apache-or-iis">http://stackoverflow.com/questions/12850216/connecting-backbone-js-with-couchdb-when-hosting-in-apache-or-iis</a></p>
+<pre><code class="lang-js"><span class="keyword">var</span> couchdb = <span class="keyword">require</span>(<span class="string">'felix-couchdb'</span>),
+    client = couchdb.createClient(config.port, config.host),
+    myDb = client.db(<span class="string">'my_db'</span>);
+
+<span class="comment">// (... express boilerplate)</span>
+app.get(<span class="string">'/resource/:resource_id'</span>, <span class="keyword">function</span> (req, res) {
+  myDb.getDoc(req.params.resource_id, <span class="keyword">function</span> (err, doc) {
+    <span class="keyword">if</span>(err)
+      <span class="keyword">return</span> res.send(err);
+
+    res.send(doc);
+  });
+});</code></pre>
+
+
+      
+        <div class="nav">
+          
+          
+            <a class="prev" href="/my-first-post/"><span class="arrow">&larr;</span> Prev</a>
+          
+          
+            <a class="next" href="/links/">Next <span class="arrow">&rarr;</span></a>
+          
+        </div>
+      
+
+    </div>
+
+  </body>
+</html>
