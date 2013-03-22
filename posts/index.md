@@ -6,7 +6,7 @@
       var data = manifest[file];
       if (post == 'index') return;
   %>
-    <a class="post-item" href="/<%= post %>/">
+    <a class="post-item" href="<%= post %>/">
       <%= data.title %>
     </a>
   <% }); %>
