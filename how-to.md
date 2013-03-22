@@ -2,11 +2,23 @@
 # How to use Backbone with CouchDB without a Backbone connector
 
 ## Working with Models
+
+### Fetch a document
 ```js
 var ClassroomModel = Backbone.Model.extend({"urlRoot":"/someDatabaseUrl","idAttribute":"_id"})
 var someClassroom = new ClassroomModel({_id:"someClassroomId"})
 someClassroom.fetch({success: function (model, response, options) {
     console.log(Classroom.get('teacher'))
+}})
+```
+
+### Save a document
+```js
+var ClassroomModel = Backbone.couch.Model.extend({_db:Backbone.couch.db('someDatabaseId')})
+var someClass = new ClassroomModel({_id:"someClassroomId"})
+someClass.fetch({success: function (model, response, options) {
+  someClass.set("teacher", "Opra")
+  someClass.save()
 }})
 ```
 
