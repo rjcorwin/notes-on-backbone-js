@@ -1,1 +1,1 @@
-[how-to](blob/master/how-to.md)
+[how-to](how-to.md)
