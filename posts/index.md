@@ -1,14 +1,16 @@
 <div class="index-page">
 
+<ul>
   <%
     _.each(posts.reverse(), function(file) {
       var post = postName(file);
       var data = manifest[file];
       if (post == 'index') return;
   %>
-    <a class="post-item" href="<%= post %>/">
+    <li><a class="post-item" href="<%= post %>/">
       <%= data.title %>
-    </a>
+    </a></li>
   <% }); %>
+</ul>
 
 </div>
