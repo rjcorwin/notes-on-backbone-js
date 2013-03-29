@@ -78,16 +78,16 @@ Lets say you had a RESTful endpoint at http://127.0.0.1/artists that you could u
 ```js
   // Define artists
   var artist = Backbone.Model.extend({
-    url: 'http://127.0.0.1/artists'
+    urlRoot: 'http://127.0.0.1/artists'
   });
 
   // Define an artist instance
-  var vanHalen = new artist('van-halen')
+  var vanHalen = new artist({id: 'van-halen'})
 
   // This performs GET http://127.0.0.1/artists/van-halen
   artist.fetch()
 
-  var eddieVeddar = new artist('eddie-veddar') 
+  var eddieVeddar = new artist({id:'eddie-veddar'}) 
 
   // This performs GET http://127.0.0.1/artists/eddie-veddar
   artist.fetch()

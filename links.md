@@ -8,8 +8,12 @@
 -- http://findcreaterun.com/backbone-js/
 
 # tutorials
-- best place to get started, click "Watch Video Tutorial" http://backbonetutorials.com/
+- __START HERE__ -> http://www.codeschool.com/courses/anatomy-of-backbonejs
+- a good place to get started, click "Watch Video Tutorial" http://backbonetutorials.com/
 -- the code from that tutorial -> https://github.com/thomasdavis/backbonetutorials/blob/gh-pages/videos/beginner/index.html
+- most recent example I could find
+-- https://github.com/alexyoung/dailyjs-backbone-tutorial
+-- http://dailyjs.com/2013/01/10/backbone-tutorial-7/
 - Step by step from jQuery to Backbone
 -- https://github.com/kjbekkelund/writings/blob/master/published/understanding-backbone.md/
 - TONS OF TUTORIALS 
@@ -46,6 +50,10 @@
 --  "That means these connectors aren't really necessary. Backbone maps very nicely onto the REST API of CouchDB/Cloudant out of the box. In fact we've found these connectors tend to add complexity. We didn't want to make a connector like that, hence the barebones design of backbone.cloudant.""
 https://github.com/topfunky/node.couchapp.backbone.demo/tree/master/attachments
 
+
+# Crazy cool 
+- Backbone Associations for 1-1 and 1-m relationships between models
+-- https://github.com/dhruvaray/backbone-associations
 
 # Backbone alternatives
 http://misoproject.com/dataset/
