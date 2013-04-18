@@ -50,16 +50,33 @@
  -  "That means these connectors aren't really necessary. Backbone maps very nicely onto the REST API of CouchDB/Cloudant out of the box. In fact we've found these connectors tend to add complexity. We didn't want to make a connector like that, hence the barebones design of backbone.cloudant.""
 https://github.com/topfunky/node.couchapp.backbone.demo/tree/master/attachments
 
+## Backbone talk sites
+- http://backbonefu.com/
+
 ## Best Practices
 - http://coenraets.org/blog/2012/01/backbone-js-lessons-learned-and-improved-sample-app/
  - "don't use el on Views"
+
+ ## Building Games using Backbone
+ - [Drone Tank Arena](http://blog.greweb.fr/2012/07/how-i-learned-backbone-js-three-js-glsl-in-one-week/)
+
+## Frameworks using backbone
+
+- [Chaplin](http://chaplinjs.org/)
+- 
+
+## Backbone.js Assemblers
+- [Phreeze generates a PHP app from a MySQL schema](https://github.com/jasonhinkle/phreeze)
+- [Brunch which can be remixed in alot of ways](http://brunch.io/)
+- 
 
 # Crazy cool 
 - Backbone Associations for 1-1 and 1-m relationships between models
  - https://github.com/dhruvaray/backbone-associations
 
 # Backbone alternatives
-http://misoproject.com/dataset/
+- [Spine](http://destroytoday.com/blog/reasons-for-spinejs/)
+- http://misoproject.com/dataset/
 
 
 # arguments against backbone
